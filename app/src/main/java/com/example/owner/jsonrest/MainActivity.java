@@ -1,10 +1,19 @@
 package com.example.owner.jsonrest;
+import android.app.AlarmManager;
+import android.app.IntentService;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.os.Handler;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -13,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
     TextView TV;
     EditText ET;
     EditText ET2;
+    EditText ET3;
     String numberHolder;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +33,24 @@ public class MainActivity extends AppCompatActivity {
         TV = (TextView) findViewById(R.id.textView);
         ET = (EditText) findViewById(R.id.editText);
         ET2 = (EditText) findViewById(R.id.editText2);
-        handler = new Handler();
+        ET3 = (EditText) findViewById(R.id.editText3);
 
-        Thread t = new Thread() {
+
+//        handler = new Handler();
+
+ /*       hidService hid = new hidService();
+        String valueHolder;
+        valueHolder = hid.getValueHolder();
+        ET3.setText(valueHolder);
+*/
+
+        hidService2 hid = new hidService2();
+        String valueHolder;
+        valueHolder = hid.getValueHolder();
+        ET3.setText(valueHolder);
+
+
+      /*Thread t = new Thread() {
 
             @Override
             public void run() {
@@ -36,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                             public void run() {
                                 updateData();
                                 updateData();
-                                updateData2();
+                                //updateData2();
                             }
                         });
                     }
@@ -44,7 +70,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        t.start();
+        t.start();*/
+
+
+
+
     }
 
     private void updateData(){
@@ -61,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     handler.post(new Runnable(){
                         public void run(){
+                            if (value .equals(""))   { numberHolder = "" ; }
                             if (value .equals("30 ")){ numberHolder = "1"; }
                             if (value .equals("31 ")){ numberHolder = "2"; }
                             if (value .equals("32 ")){ numberHolder = "3"; }
@@ -81,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
-    private void updateData2(){
+    /*private void updateData2(){
 
         new Thread(){
             public void run(){
@@ -104,16 +135,35 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.start();
-    }
-
+    }*/
 
     public void clickButton(View V){
         updateData();
         updateData();
     }
 
-    public void clickButton2(View V){
+    /*public void clickButton2(View V){
         updateData2();
+    }*/
+
+ /*   public void startService(View view){
+        Intent intent = new Intent(this,hidService.class);
+        startService(intent);
     }
+    public void stopService(View view){
+        Intent intent = new Intent(this,hidService.class);
+        stopService(intent);
+    }*/
+    public void startService(View view){
+        Intent intent = new Intent(this,hidService2.class);
+        startService(intent);
+    }
+    public void stopService(View view){
+        Intent intent = new Intent(this,hidService2.class);
+        stopService(intent);
+    }
+
+
+
 
 }
